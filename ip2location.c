@@ -16,6 +16,7 @@
   +----------------------------------------------------------------------+
   Please contact support@ip2location.com  with any comments
 */
+#include <arpa/inet.h>
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -561,6 +562,8 @@ PHP_FUNCTION(ip2location_get_all)
 {
 	char *ip_address;
 	int ip_len;
+	uint32_t ip_nbo;
+	char ip_buf[INET_ADDRSTRLEN];
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -571,6 +574,15 @@ PHP_FUNCTION(ip2location_get_all)
 
 	record = IP2Location_get_all(IP2LOCATION_G(ip2location_ptr), ip_address);
 	array_init(return_value);
+
+	ip_nbo = htonl(record->ipfrom);
+    inet_ntop(AF_INET, &ip_nbo, ip_buf, sizeof(ip_buf));
+    add_assoc_string(return_value, "ipfrom", ip_buf, 1);
+
+    ip_nbo = htonl(record->ipto);
+    inet_ntop(AF_INET, &ip_nbo, ip_buf, sizeof(ip_buf));
+    add_assoc_string(return_value, "ipto", ip_buf, 1);
+
 	add_assoc_string(return_value, "country_short", record->country_short, 1 );
 	add_assoc_string(return_value, "country_long", record->country_long, 1 );
 	add_assoc_string(return_value, "region",record->region, 1 );
