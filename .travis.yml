@@ -10,6 +10,7 @@ before_script:
   - ./configure --prefix=/home/travis/build/MonetizerDevTeam/IP2Location-PECL-Extension/build
   - make
   - make install
+  - cd ..
 
 script:
   - phpize
