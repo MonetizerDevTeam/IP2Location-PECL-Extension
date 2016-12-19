@@ -1,0 +1,21 @@
+language: php
+php:
+  - 5.6
+
+before_script:
+  - git clone https://github.com/MonetizerDevTeam/IP2Location-C-Library.git
+  - cd IP2Location-C-Library
+  - autoreconf -i -v --force
+  - ./configure
+  - make
+  - make install
+
+script:
+  - phpize
+  - ./configure
+  - make
+  - make install
+  - cd test
+  - php cachemethodtest.php -d extension=ip2location.so
+  - php filemethodtest.php -d extension=ip2location.so
+  - php shmmethodtest.php -d extension=ip2location.so
