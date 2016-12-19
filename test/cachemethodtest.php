@@ -42,6 +42,31 @@
         echo "\n";
         echo ip2location_get_usagetype("25.5.10.2");
         echo "\n";
-        echo ip2location_close();
-?>
 
+        /* Additional Tests for ipfrom / ipto fields */
+        $success = true;
+        $data = ip2location_get_all("25.5.10.2");
+        if (isset($data['ipfrom'])) {
+            echo "ipfrom: ";
+            echo $data['ipfrom'];
+            echo "\n";
+        } else {
+            echo "ipfrom not present in data" . PHP_EOL;
+            $success = false;
+        }
+
+        if (isset($data['ipto'])) {
+            echo "ipto: ";
+            echo $data['ipto'];
+            echo "\n";
+        } else {
+            echo "ipto not present in data" . PHP_EOL;
+            $success = false;
+        }
+
+        echo ip2location_close();
+
+        if (success)
+            exit(0);
+        else
+            exit(1);
