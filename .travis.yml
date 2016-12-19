@@ -18,7 +18,7 @@ script:
   - make
   - make install
   - cd test
-  - php cachemethodtest.php -d extension=ip2location.so
-  - php filemethodtest.php -d extension=ip2location.so
-  - php shmmethodtest.php -d extension=ip2location.so
+  - php -d extension=ip2location.so cachemethodtest.php
+  - php -d extension=ip2location.so filemethodtest.php
+  - php -d extension=ip2location.so shmmethodtest.php
 
