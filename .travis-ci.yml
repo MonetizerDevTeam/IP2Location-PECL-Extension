@@ -19,3 +19,4 @@ script:
   - php cachemethodtest.php -d extension=ip2location.so
   - php filemethodtest.php -d extension=ip2location.so
   - php shmmethodtest.php -d extension=ip2location.so
+
