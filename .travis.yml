@@ -3,16 +3,17 @@ php:
   - 5.6
 
 before_script:
+  - mkdir /home/travis/build/MonetizerDevTeam/IP2Location-PECL-Extension/build
   - git clone https://github.com/MonetizerDevTeam/IP2Location-C-Library.git
   - cd IP2Location-C-Library
   - autoreconf -i -v --force
-  - ./configure
+  - ./configure --prefix=/home/travis/build/MonetizerDevTeam/IP2Location-PECL-Extension/build
   - make
   - make install
 
 script:
   - phpize
-  - ./configure
+  - ./configure --with-ip2location=/home/travis/build/MonetizerDevTeam/IP2Location-PECL-Extension/build
   - make
   - make install
   - cd test
