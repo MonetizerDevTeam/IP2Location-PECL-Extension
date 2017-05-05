@@ -133,7 +133,7 @@ PHP_MINFO_FUNCTION(ip2location)
 PHP_FUNCTION(ip2location_open)
 {
 	char * file_path = NULL;
-	int path_len; 
+	size_t path_len;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &file_path, &path_len) == FAILURE) { 
 		return;
@@ -156,11 +156,14 @@ PHP_FUNCTION(ip2location_open)
  * Returns the success or failure */
 PHP_FUNCTION(ip2location_open_mem)
 {
-	int method;
-	int arg_len;
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "l", &method, &arg_len) == FAILURE) { 
+	long method_l;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "l", &method_l) == FAILURE) {
 		return;
 	}
+
+    int method = (int)method_l;
+
 	/*Shared memory method is not supported*/
 	if( method == IP2LOCATION_FILE_IO || method == IP2LOCATION_CACHE_MEMORY || method == IP2LOCATION_SHARED_MEMORY ){
 		if(IP2Location_open_mem(IP2LOCATION_G(ip2location_ptr), method) == -1){
@@ -181,7 +184,7 @@ PHP_FUNCTION(ip2location_open_mem)
 PHP_FUNCTION(ip2location_get_country_short)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -200,7 +203,7 @@ PHP_FUNCTION(ip2location_get_country_short)
 PHP_FUNCTION(ip2location_get_country_long)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -219,7 +222,7 @@ PHP_FUNCTION(ip2location_get_country_long)
 PHP_FUNCTION(ip2location_get_region)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -238,7 +241,7 @@ PHP_FUNCTION(ip2location_get_region)
 PHP_FUNCTION(ip2location_get_city)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -257,7 +260,7 @@ PHP_FUNCTION(ip2location_get_city)
 PHP_FUNCTION(ip2location_get_isp)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -276,7 +279,7 @@ PHP_FUNCTION(ip2location_get_isp)
 PHP_FUNCTION(ip2location_get_latitude)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -295,7 +298,7 @@ PHP_FUNCTION(ip2location_get_latitude)
 PHP_FUNCTION(ip2location_get_longitude)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -314,7 +317,7 @@ PHP_FUNCTION(ip2location_get_longitude)
 PHP_FUNCTION(ip2location_get_domain)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -333,7 +336,7 @@ PHP_FUNCTION(ip2location_get_domain)
 PHP_FUNCTION(ip2location_get_zipcode)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -352,7 +355,7 @@ PHP_FUNCTION(ip2location_get_zipcode)
 PHP_FUNCTION(ip2location_get_timezone)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -371,7 +374,7 @@ PHP_FUNCTION(ip2location_get_timezone)
 PHP_FUNCTION(ip2location_get_netspeed)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -390,7 +393,7 @@ PHP_FUNCTION(ip2location_get_netspeed)
 PHP_FUNCTION(ip2location_get_iddcode)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -409,7 +412,7 @@ PHP_FUNCTION(ip2location_get_iddcode)
 PHP_FUNCTION(ip2location_get_areacode)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -428,7 +431,7 @@ PHP_FUNCTION(ip2location_get_areacode)
 PHP_FUNCTION(ip2location_get_weatherstationcode)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -447,7 +450,7 @@ PHP_FUNCTION(ip2location_get_weatherstationcode)
 PHP_FUNCTION(ip2location_get_weatherstationname)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -466,7 +469,7 @@ PHP_FUNCTION(ip2location_get_weatherstationname)
 PHP_FUNCTION(ip2location_get_mcc)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -485,7 +488,7 @@ PHP_FUNCTION(ip2location_get_mcc)
 PHP_FUNCTION(ip2location_get_mnc)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -504,7 +507,7 @@ PHP_FUNCTION(ip2location_get_mnc)
 PHP_FUNCTION(ip2location_get_mobilebrand)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -523,7 +526,7 @@ PHP_FUNCTION(ip2location_get_mobilebrand)
 PHP_FUNCTION(ip2location_get_elevation)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -542,7 +545,7 @@ PHP_FUNCTION(ip2location_get_elevation)
 PHP_FUNCTION(ip2location_get_usagetype)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	IP2LocationRecord *record = NULL;
 
 	PHP_IP2LOCATION_DB_CHECK;
@@ -561,7 +564,7 @@ PHP_FUNCTION(ip2location_get_usagetype)
 PHP_FUNCTION(ip2location_get_all)
 {
 	char *ip_address;
-	int ip_len;
+	size_t ip_len;
 	uint32_t ip_nbo;
 	char ip_buf[INET_ADDRSTRLEN];
 	IP2LocationRecord *record = NULL;
